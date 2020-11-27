@@ -1,0 +1,118 @@
+const mongoose = require("mongoose")
+
+const sampleSchema = mongoose.Schema({
+    firstName:{
+        type:String,
+        required: true
+    },
+    authId:{
+        type:String,
+        default: null
+    },
+    lastName:{
+        type:String,
+        required: true
+    },
+    gender:{
+        type:String,
+        required: true,
+        enum: ['male', 'female']
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true  
+    },
+    password: {
+        type: String,
+        required: true  
+    },
+    created_by_provider:{
+        type: Boolean,
+        default: false
+    },
+    created_by:{
+        type: mongoose.Schema.ObjectId,
+        ref: "Provider"
+    },
+    dob: {
+        type: Date,
+        default: null
+    },
+    MRID:{
+        type: String,
+        default: null
+    },
+    userName:{
+        type: String,
+        required: true,
+        unique: true
+    },
+    genotype:{
+        type: String,
+        default: null
+    },
+    bloodGroup:{
+        type: String,
+        default: null
+    },
+    profile:{
+        type: String,
+        default: null
+    },
+    phoneNumber:{
+        type: String
+    },
+    profile_picture:{
+        type: String,
+        // unique: true,
+        default:null
+    },
+    nextOfKin:{
+        type: String,
+        default: null
+    },
+    nextOfKin_contact:{
+        type: String,
+        default: null
+    },
+    nationality:{
+        type: String,
+        default: null,
+    },
+    stateOfOrigin:{
+        type: String,
+        default: null,
+    },
+    role:{
+        type: String,
+        default: "user",
+        enum: ["user", "admin", "provider"]
+    },
+    hospitals:[
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: "Provider"
+        }
+    ],
+    files:[
+        {
+            type: String
+        }
+    ],
+    nhis_number:{
+        type: String,
+        default: null
+    },
+    deactivate: {
+        type: Boolean,
+        default: false
+    }
+},{
+    timestamps: true
+})
+
+//added stuff here
+module.exports = mongoose.model("sample", sampleSchema)
+
+
