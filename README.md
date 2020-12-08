@@ -5,7 +5,7 @@
  
  *TODO*
  
- * create your own branch on git and call it "maryam"
+ * create your own branch on git and call it your name
  * connect app to monogodb using mongoose.
  * add model files for user and post in the model file. 
    * user schema should have: username, email, password
