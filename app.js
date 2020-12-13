@@ -1,28 +1,41 @@
-if(process.env.NODE_ENV !== 'production'){
-    require("dotenv").config({path: __dirname + '/.env'})
-}
 
-const express = require("express")
-const app = express()
-const cors = require("cors")
-const bodyParser = require("body-parser")
-const fileUpload = require("express-fileupload")
-const path = require("path")
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+require('dotenv').config();
+// const fileUpload = require("express-fileupload");
+const path = require("path");
 
+
+//Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false, limit: "10mb"}))
 app.use(bodyParser.json({limit: "10mb"}))
 app.use(cors())
 
 
-const usersRoute = require('./routes/users');
-app.use('/users', usersRoute);
 
-const postsRoute = require('./routes/posts');
-app.use('/posts', postsRoute);
+//Connect MongoDB Task 1
+const mongoURI = process.env.MONGO_URI
+mongoose.connect(
+  mongoURI,
+  { 
+    useUnifiedTopology: true,    
+    useNewUrlParser: true, 
+    useCreateIndex: true 
+  })
+  .then(() => {
+    console.log("Successfully connected to MongoDB.");
+  })
+  .catch(err => {
+    console.error("Connection error", err);
+  });
 
-const port = process.env.PORT || 3000
 
+//Listen to port
+const port = process.env.PORT || 8000;
 app.listen(port, () => {
-    console.log(`listening on port ${port}`)
-})
+    console.log(`API is running on port ${port}`);
+});
